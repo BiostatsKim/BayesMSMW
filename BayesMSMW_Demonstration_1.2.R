@@ -73,7 +73,7 @@ for(n in 1:N){
 
 # Generate observation data y
 y <- rnorm(N,mean=mu,sd=rep(errvar,N))
-Y <- y#rbinom(N,1,prob=pnorm(y))
+Y <- y
 
 
 # Generate Test data
@@ -84,7 +84,7 @@ for(n in 1:N){
   mutest[n] <- (t(true_w) %*% Xtest[n,,] %*% t(t(true_v)))
 }
 yy <- rnorm(N,mean=mu,sd=rep(errvar,N))
-Ytest <- yy#rbinom(N,1,prob=pnorm(y))
+Ytest <- yy
 
 
 source("ThesisRPackage_1.2.R")
@@ -93,17 +93,16 @@ Xlist1 <- X[,c(1:5),]
 Xlist2 <- X[,c(6:10),]
 Xlistfull <- list(Xlist1,Xlist2)
 
-func.test.2 <- BayesMSMW(X.list=Xlistfull,Y.list = Y,multi.source = "yes",rank = 1,outcome = "continuous")
+func.test <- BayesMSMW(X.list=Xlistfull,Y.list = Y,multi.source = "yes",rank = 1,outcome = "continuous")
 
 
-func.test.2$TrainErr
+func.test$TrainErr
 
 
-func.pred.2 <- predict.MSMW(Xtest=Xtest,R=1, Ws=func.test.2$Ws, Vs=func.test.2$Vs,outcome = "continuous")
+func.pred <- predict.MSMW(Xtest=Xtest,R=1, Ws=func.test.2$Ws, Vs=func.test.2$Vs,outcome = "continuous")
 
 
-class_tru <- Ytest
-misclas <- class_tru - func.pred$prediction
-misclassification_mse <- sum((misclas)^2)/sum((class_tru^2))
+misclas <- Ytest - func.pred$prediction
+relative_mse <- sum((misclas)^2)/sum((class_tru^2))
 
 
