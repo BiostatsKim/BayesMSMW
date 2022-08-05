@@ -87,7 +87,7 @@ yy <- rnorm(N,mean=mu,sd=rep(errvar,N))
 Ytest <- yy
 
 
-source("ThesisRPackage_1.2.R")
+source("BayesMSMW_Code_1.2.R") #See code file: https://github.com/BiostatsKim/BayesMSMW/edit/main/BayesMSMW_Code_1.2.R
 
 Xlist1 <- X[,c(1:5),]
 Xlist2 <- X[,c(6:10),]
